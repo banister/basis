@@ -110,7 +110,7 @@ setup_spacemacs() {
 
 setup_apps() {
     if which jq > /dev/null 2>&1; then
-        echo "INFO: linux apps already installed"
+        echo "INFO: apps already installed"
         return
     fi
 
