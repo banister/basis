@@ -182,10 +182,15 @@ create_or_append() {
     fi
 }
 
-wrap_with_messages git
-wrap_with_messages ssh
-wrap_with_messages ruby
-wrap_with_messages nano
-wrap_with_messages spacemacs
-wrap_with_messages apps
-wrap_with_messages zsh
+main() {
+    wrap_with_messages git
+    wrap_with_messages ssh
+    wrap_with_messages ruby
+    wrap_with_messages nano
+    wrap_with_messages spacemacs
+    wrap_with_messages apps
+    wrap_with_messages zsh
+}
+
+# start
+main
