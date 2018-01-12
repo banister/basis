@@ -2,18 +2,22 @@
 
 # curl https://raw.githubusercontent.com/banister/basis/master/basis.sh > ~/foo.sh
 
+set -e # abort script on first error
+
 RUBY_VERSION=2.5.0
 
-set -e
+# The list of things successfully installed
+# List is appended to as installation happpens.
+COMPLETED_INSTALLS=""
+
+echo_error() {
+    echo "$@" >&2
+}
 
 if [ -z $DROPBOX_TOKEN ]; then
     echo_error "ERROR: You need to export the DROPBOX_TOKEN environment variable!"
     exit 1
 fi
-
-# The list of things successfully installed
-# List is appended to as installation happpens.
-COMPLETED_INSTALLS=""
 
 setup_git() {
     download_file /configfiles/git/dot-gitconfig ~/.gitconfig
@@ -105,10 +109,6 @@ download_file() {
         echo_error "ERROR: Failed to make a request to dropbox, file path was: $1"
         exit 1
     fi
-}
-
-echo_error() {
-    echo "$@" >&2
 }
 
 prepare_command() {
