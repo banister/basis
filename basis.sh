@@ -133,7 +133,7 @@ setup_zsh() {
         return
     fi
 
-    curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     echo 'ZSH_THEME="robbyrussell"' >> ~/.zshrc
     echo 'PATH=~/.rbenv/bin/:$PATH' >> ~/.zshrc
     echo 'eval "$(rbenv init -)"' >> ~/.zshrc
