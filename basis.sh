@@ -198,8 +198,10 @@ main() {
     wrap_with_messages nano
     wrap_with_messages spacemacs
     wrap_with_messages apps
-    wrap_with_messages zsh
     wrap_with_messages direcs
+
+    # must be last as oh-my-zsh installation enters the zsh
+    wrap_with_messages zsh
 }
 
 # start
