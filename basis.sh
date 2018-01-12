@@ -128,7 +128,7 @@ setup_apps() {
 }
 
 setup_zsh() {
-    if [-e ~/.oh-my-zsh ]; then
+    if [ -e ~/.oh-my-zsh ]; then
         echo "INFO: oh-my-zsh already installed"
         return
     fi
