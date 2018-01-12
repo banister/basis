@@ -1,6 +1,5 @@
 #!/bin/bash
 
-DROPBOX_TOKEN=
 RUBY_VERSION=2.5.0
 
 setup_git() {
