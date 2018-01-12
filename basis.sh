@@ -218,10 +218,12 @@ write_to_zshrc() {
 }
 
 completion_message() {
+    echo
     for i in $COMPLETED_INSTALLS; do
-        echo "$i is setup"
+        echo "> $i is setup"
     done
 
+    echo
     echo "###############################"
     echo "# Finished setting up system! #"
     echo "###############################"
