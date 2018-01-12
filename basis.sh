@@ -11,6 +11,10 @@ if [ -z $DROPBOX_TOKEN ]; then
     exit 1
 fi
 
+# The list of things successfully installed
+# List is appended to as installation happpens.
+COMPLETED_INSTALLS=""
+
 setup_git() {
     download_file /configfiles/git/dot-gitconfig ~/.gitconfig
     prepare_command git
@@ -20,6 +24,7 @@ wrap_with_messages() {
     echo "Setting up $1"
     setup_$1
     echo "OK: finished setting up ${1}!"
+    COMPLETED_INSTALLS="$COMPLETED_INSTALLS $1"
 }
 
 setup_ssh() {
@@ -213,6 +218,10 @@ write_to_zshrc() {
 }
 
 completion_message() {
+    for i in $COMPLETED_INSTALLS; do
+        echo "$i is setup"
+    done
+
     echo "###############################"
     echo "# Finished setting up system! #"
     echo "###############################"
