@@ -146,24 +146,28 @@ setup_zsh() {
     fi
 
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    echo 'ZSH_THEME="robbyrussell"' >> ~/.zshrc
-    echo 'PATH=~/.rbenv/bin/:$PATH' >> ~/.zshrc
-    echo 'eval "$(rbenv init -)"' >> ~/.zshrc
-    echo 'export CSCOPE_EDITOR=nano' >> ~/.zshrc
-    echo 'CODE=~/code' >> ~/.zshrc
-    echo 'PRY=~/code/pry' >> ~/.zshrc
-    echo 'PIA=~/code/pia/pia_manager' >> ~/.zshrc
-    echo 'export CSCOPE_EDITOR=nano' >> ~/.zshrc
-    echo 'export LESS="-R -X -F $LESS"' >> ~/.zshrc
-    echo 'alias be="bundle exec"' >> ~/.zshrc
+    write_to_zshrc 'ZSH_THEME="robbyrussell"'
+    write_to_zshrc 'PATH=~/.rbenv/bin/:$PATH'
+    write_to_zshrc 'eval "$(rbenv init -)"'
+    write_to_zshrc 'export CSCOPE_EDITOR=nano'
+    write_to_zshrc 'CODE=~/code'
+    write_to_zshrc 'PRY=~/code/pry'
+    write_to_zshrc 'PIA=~/code/pia/pia_manager'
+    write_to_zshrc 'export CSCOPE_EDITOR=nano'
+    write_to_zshrc 'export LESS="-R -X -F $LESS"'
+    write_to_zshrc 'alias be="bundle exec"'
 
-    cat << 'EOF' >> ~/.zshrc
+    if ! grep 'function cr' ~/.zshrc; then
+        cat << 'EOF' >> ~/.zshrc
 function cr {
   coderay $1 | less -N
 }
-EOF
 
-    cat << 'EOF' >> ~/.zshrc
+EOF
+    fi
+
+    if ! grep 'function cscope_setup' ~/.zshrc; then
+        cat << 'EOF' >> ~/.zshrc
 function cscope_setup {
   echo "setting up cscope for the PWD"
   set -x
@@ -172,14 +176,15 @@ function cscope_setup {
   echo "all setup! type cscope -d"
 }
 EOF
+    fi
 }
 
-create_or_append() {
-    if [ -f "$2" ]; then
-        echo "$1" >> "$2"
-    else
-        echo "$1" > "$2"
+write_to_zshrc() {
+    if grep -q "$@" ~/.zshrc; then
+        return
     fi
+
+    echo "$@" >> ~/.zshrc
 }
 
 main() {
