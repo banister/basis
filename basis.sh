@@ -8,7 +8,7 @@ set -e
 
 if [ -z DROPBOX_TOKEN ]; then
     echo "ERROR: You need to set the DROPBOX_TOKEN environment variable!"
-    exit(1)
+    exit 1
 fi
 
 setup_git() {
@@ -96,7 +96,7 @@ download_file() {
 
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to make a request to dropbox, file path was: $1"
-        exit(1)
+        exit 1
     fi
 }
 
