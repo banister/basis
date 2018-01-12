@@ -179,6 +179,10 @@ EOF
     fi
 }
 
+setup_direcs() {
+    mkdir -p ~/code
+}
+
 write_to_zshrc() {
     if grep -q "$@" ~/.zshrc; then
         return
@@ -195,6 +199,7 @@ main() {
     wrap_with_messages spacemacs
     wrap_with_messages apps
     wrap_with_messages zsh
+    wrap_with_messages direcs
 }
 
 # start
