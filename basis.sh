@@ -198,7 +198,10 @@ function cscope_setup {
   echo "setting up cscope for the PWD"
   set -x
   find . -name "*.c" -o -name "*.h" > cscope.files
-  cscope -q -b
+
+  # pass on args so we can invoke with, say, cscope_setup -k, to leave out
+  # system headers if building kernel for example
+  cscope -q -b "$@"
   echo "all setup! type cscope -d"
 }
 EOF
