@@ -212,6 +212,12 @@ write_to_zshrc() {
     echo "$@" >> ~/.zshrc
 }
 
+completion_message() {
+    echo "###############################"
+    echo "# Finished setting up system! #"
+    echo "###############################"
+}
+
 main() {
     wrap_with_messages git
     wrap_with_messages ssh
@@ -223,6 +229,9 @@ main() {
 
     # must be last as oh-my-zsh installation enters the zsh
     wrap_with_messages zsh
+
+    # done!
+    completion_message
 }
 
 # start
