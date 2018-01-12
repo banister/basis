@@ -71,7 +71,7 @@ setup_ruby() {
             mkdir -p ~/.rbenv/plugins
             git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build --depth 1
             sudo apt update
-            sudo apt install gcc-7 autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
+            sudo apt install gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
             rbenv install $RUBY_VERSION
             ;;
         *)
