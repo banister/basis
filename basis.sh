@@ -4,6 +4,8 @@
 
 RUBY_VERSION=2.5.0
 
+set -e
+
 if [ -z DROPBOX_TOKEN ]; then
     echo "ERROR: You need to set the DROPBOX_TOKEN environment variable!"
     exit(1)
