@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# https://raw.githubusercontent.com/banister/basis/master/basis.sh
+
 RUBY_VERSION=2.5.0
 
 setup_git() {
