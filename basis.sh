@@ -90,7 +90,7 @@ download_file() {
     # if the destination file already exists, back it up
     backup_file "$2"
 
-    curl -X POST https://content.dropboxapi.com/2/files/download \
+    curl -sL -X POST https://content.dropboxapi.com/2/files/download \
          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
          --header "Dropbox-API-Arg: {\"path\": \"${1}\"}" -o "$2"
 
