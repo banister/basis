@@ -203,6 +203,8 @@ function cscope_setup {
 }
 EOF
     fi
+
+    source ~/.zshrc
 }
 
 setup_direcs() {
