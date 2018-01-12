@@ -91,6 +91,11 @@ download_file() {
     curl -X POST https://content.dropboxapi.com/2/files/download \
          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
          --header "Dropbox-API-Arg: {\"path\": \"${1}\"}" -o "$2"
+
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Failed to make a request to dropbox, file path was: $1"
+        exit(1)
+    fi
 }
 
 backup_file() {
