@@ -107,7 +107,7 @@ echo_error() {
 }
 
 prepare_command() {
-    if which "$1" jq > /dev/null 2>&1; then
+    if ! which "$1" jq > /dev/null 2>&1; then
         case $(uname -s) in
             Darwin)
                 sudo brew install "$1"
