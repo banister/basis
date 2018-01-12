@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# https://raw.githubusercontent.com/banister/basis/master/basis.sh
+# curl https://raw.githubusercontent.com/banister/basis/master/basis.sh > ~/foo.sh
 
 RUBY_VERSION=2.5.0
 
