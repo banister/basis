@@ -7,12 +7,13 @@ RUBY_VERSION=2.5.0
 set -e
 
 if [ -z $DROPBOX_TOKEN ]; then
-    echo "ERROR: You need to export the DROPBOX_TOKEN environment variable!"
+    echo_error "ERROR: You need to export the DROPBOX_TOKEN environment variable!"
     exit 1
 fi
 
 setup_git() {
     download_file /configfiles/git/dot-gitconfig ~/.gitconfig
+    prepare_command git
 }
 
 wrap_with_messages() {
@@ -65,7 +66,7 @@ setup_ruby() {
             rbenv install $RUBY_VERSION
             ;;
         *)
-            echo "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
+            echo_error "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
             ;;
     esac
 
@@ -89,14 +90,34 @@ setup_linux_apps() {
 download_file() {
     # if the destination file already exists, back it up
     backup_file "$2"
+    prepare_command curl
 
     curl -sL -X POST https://content.dropboxapi.com/2/files/download \
          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
          --header "Dropbox-API-Arg: {\"path\": \"${1}\"}" -o "$2"
 
     if [ $? -ne 0 ]; then
-        echo "ERROR: Failed to make a request to dropbox, file path was: $1"
+        echo_error "ERROR: Failed to make a request to dropbox, file path was: $1"
         exit 1
+    fi
+}
+
+echo_error() {
+    echo "$@" >&2
+}
+
+prepare_command() {
+    if which "$1" jq > /dev/null 2>&1; then
+        case $(uname -s) in
+            Darwin)
+                sudo brew install "$1"
+            ;;
+            Linux)
+                sudo apt install "$1"
+            ;;
+            *)
+                echo_error "ERROR: Failed to install $1"
+        esac
     fi
 }
 
@@ -134,7 +155,7 @@ setup_apps() {
             wrap_with_messages linux_apps
             ;;
         *)
-            echo "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
+            echo_error "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
             ;;
     esac
 }
