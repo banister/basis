@@ -110,8 +110,6 @@ main() {
   echo 'p.p.s. Get stickers and t-shirts at https://shop.planetargon.com.'
   echo ''
   printf "${NORMAL}"
-
-  echo 'should NOT be switching to zsh here....'
 }
 
 main

@@ -6,16 +6,25 @@ set -e # abort script on first error
 
 RUBY_VERSION=2.5.0
 
+RED="$(tput setaf 1)"
+BLUE="$(tput setaf 4)"
+BOLD="$(tput bold)"
+NORMAL="$(tput sgr0)"
+
 # The list of things successfully installed
 # List is appended to as installation happpens.
 COMPLETED_INSTALLS=""
 
 echo_error() {
-    echo "$@" >&2
+    echo "${RED}${BOLD}ERROR: $@" >&2
+}
+
+echo_info() {
+    echo "${BLUE}${BOLD}INFO: $@"
 }
 
 if [ -z $DROPBOX_TOKEN ]; then
-    echo_error "ERROR: You need to export the DROPBOX_TOKEN environment variable!"
+    echo_error "You need to export the DROPBOX_TOKEN environment variable!"
     exit 1
 fi
 
@@ -25,9 +34,9 @@ setup_git() {
 }
 
 wrap_with_messages() {
-    echo "Setting up $1"
+    echo_info "Setting up $1"
     setup_$1
-    echo "OK: finished setting up ${1}!"
+    echo_info "Finished setting up ${1}!"
     COMPLETED_INSTALLS="$COMPLETED_INSTALLS $1"
 }
 
@@ -41,7 +50,7 @@ setup_ssh() {
 setup_nano() {
     local nano_dir=~/nanorc
     if [ -e "$nano_dir" ]; then
-        echo "INFO: nano already configured"
+        echo_info "nano already configured"
         return
     fi
 
@@ -54,7 +63,7 @@ setup_nano() {
 
 setup_ruby() {
     if [ -e ~/.rbenv ]; then
-        echo "INFO: ruby already installed"
+        echo_info "ruby already installed"
         return
     fi
 
@@ -73,7 +82,7 @@ setup_ruby() {
             sudo apt install gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
             ;;
         *)
-            echo_error "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
+            echo_error "UNSUPPORTED OS VERSION $(uname -s)"
             ;;
     esac
 
@@ -105,7 +114,7 @@ download_file() {
          --header "Dropbox-API-Arg: {\"path\": \"${1}\"}" -o "$2"
 
     if [ $? -ne 0 ]; then
-        echo_error "ERROR: Failed to make a request to dropbox, file path was: $1"
+        echo_error "Failed to make a request to dropbox, file path was: $1"
         exit 1
     fi
 }
@@ -120,7 +129,7 @@ prepare_command() {
                 sudo apt install "$1"
             ;;
             *)
-                echo_error "ERROR: Failed to install $1"
+                echo_error "Failed to install $1"
         esac
     fi
 }
@@ -137,7 +146,7 @@ setup_homebrew() {
 
 setup_spacemacs() {
     if [ -e ~/.emacs.d/spacemacs.mk ]; then
-        echo "INFO: spacemacs already installed"
+        echo_info "spacemacs already installed"
         return
     fi
 
@@ -147,7 +156,7 @@ setup_spacemacs() {
 
 setup_apps() {
     if which jq > /dev/null 2>&1; then
-        echo "INFO: apps already installed"
+        echo_info "apps already installed"
         return
     fi
 
@@ -159,14 +168,14 @@ setup_apps() {
             wrap_with_messages linux_apps
             ;;
         *)
-            echo_error "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
+            echo_error "UNSUPPORTED OS VERSION $(uname -s)"
             ;;
     esac
 }
 
 setup_zsh() {
     if [ -e ~/.oh-my-zsh ]; then
-        echo "INFO: oh-my-zsh already installed"
+        echo_info "oh-my-zsh already installed"
         return
     fi
 
@@ -206,8 +215,6 @@ function cscope_setup {
 }
 EOF
     fi
-
-    source ~/.zshrc
 }
 
 setup_direcs() {
@@ -225,13 +232,13 @@ write_to_zshrc() {
 completion_message() {
     echo
     for i in $COMPLETED_INSTALLS; do
-        echo "> $i is setup"
+        echo_info "$i is setup"
     done
 
     echo
-    echo "###############################"
-    echo "# Finished setting up system! #"
-    echo "###############################"
+    echo "${BOLD}###############################"
+    echo "${BOLD}# Finished setting up system! #"
+    echo "${BOLD}###############################"
 }
 
 switch_shell_to_zsh() {
@@ -247,7 +254,6 @@ main() {
     wrap_with_messages apps
     wrap_with_messages direcs
 
-    set -x
     # must be last as oh-my-zsh installation enters the zsh
     wrap_with_messages zsh
 
@@ -255,6 +261,11 @@ main() {
 
     # done!
     completion_message
+
+    # now change to zsh
+    echo_info "Now changing shell to zsh"
+    echo "${NORMAL}"
+    env zsh
 }
 
 # start
