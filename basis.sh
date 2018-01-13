@@ -170,7 +170,8 @@ setup_zsh() {
         return
     fi
 
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    # doctored oh-my-zsh installer that doesn't invoke zsh after installation
+    sh -c "$(curl -fsSL https://gist.githubusercontent.com/banister/08c6a6b3adb764653d5feb8f16f41cb1/raw/137cd116a1b0506a2a3a56c07fb1b80c6d65e6a6/omz)"
     write_to_zshrc 'ZSH_THEME="robbyrussell"'
     write_to_zshrc 'PATH=~/.rbenv/bin/:$PATH'
     write_to_zshrc 'eval "$(rbenv init -)"'
