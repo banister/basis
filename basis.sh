@@ -64,7 +64,6 @@ setup_ruby() {
             wrap_with_messages homebrew
             brew install openssl libyaml libffi
             brew install rbenv
-            rbenv install $RUBY_VERSION
             ;;
         Linux)
             git clone https://github.com/rbenv/rbenv.git ~/.rbenv --depth 1
@@ -72,7 +71,6 @@ setup_ruby() {
             git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build --depth 1
             sudo apt update
             sudo apt install gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
-            rbenv install $RUBY_VERSION
             ;;
         *)
             echo_error "ERROR: UNSUPPORTED OS VERSION $(uname -s)"
@@ -81,6 +79,7 @@ setup_ruby() {
 
     eval $updated_path
     eval "$(rbenv init -)"
+    rbenv install $RUBY_VERSION
     rbenv global $RUBY_VERSION
     gem install pry pry-doc --no-document
 }
