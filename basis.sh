@@ -171,7 +171,7 @@ setup_zsh() {
     fi
 
     # doctored oh-my-zsh installer that doesn't invoke zsh after installation
-    sh -c "$(curl -fsSL https://gist.githubusercontent.com/banister/08c6a6b3adb764653d5feb8f16f41cb1/raw/137cd116a1b0506a2a3a56c07fb1b80c6d65e6a6/omz)"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/banister/basis/master/setup_ohmyzsh.sh)"
     write_to_zshrc 'ZSH_THEME="robbyrussell"'
     write_to_zshrc 'PATH=~/.rbenv/bin/:$PATH'
     write_to_zshrc 'eval "$(rbenv init -)"'
@@ -234,6 +234,10 @@ completion_message() {
     echo "###############################"
 }
 
+switch_shell_to_zsh() {
+    chsh -s $(grep -m1 /zsh$ /etc/shells)
+}
+
 main() {
     wrap_with_messages git
     wrap_with_messages ssh
@@ -243,8 +247,11 @@ main() {
     wrap_with_messages apps
     wrap_with_messages direcs
 
+    set -x
     # must be last as oh-my-zsh installation enters the zsh
     wrap_with_messages zsh
+
+    switch_shell_to_zsh
 
     # done!
     completion_message
