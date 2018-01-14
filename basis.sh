@@ -196,7 +196,7 @@ setup_zsh() {
     if ! grep 'function cr' ~/.zshrc; then
         cat << 'EOF' >> ~/.zshrc
 function cr {
-  coderay $1 | less -N
+  coderay $@ | less -N
 }
 
 EOF
@@ -211,11 +211,29 @@ function cscope_setup {
 
   # pass on args so we can invoke with, say, cscope_setup -k, to leave out
   # system headers if building kernel for example
-  cscope -q -b "$@"
+  cscope -q -b $@
   echo "all setup! type cscope -d"
 }
 EOF
     fi
+
+    if ! grep 'function cdc' ~/.zshrc; then
+        cat << 'EOF' >> ~/.zshrc
+function cdc {
+    if [ $# -le 0 ]; then
+        echo "No pattern provided."
+        return
+    fi
+
+    local result=$(find ~/code -type d -maxdepth 4 | grep -m1 "$@")
+
+    if [ -z $result ]; then
+        echo "No match found for '$@'" >&2
+    else
+        cd "$result"
+    fi
+}
+EOF
 }
 
 setup_direcs() {
@@ -243,10 +261,6 @@ completion_message() {
     echo "${NORMAL}"
 }
 
-switch_shell_to_zsh() {
-    chsh -s $(grep -m1 /zsh$ /etc/shells)
-}
-
 main() {
     wrap_with_messages git
     wrap_with_messages ssh
@@ -265,7 +279,7 @@ main() {
     completion_message
 
     # now change to zsh
-    echo_info "Now changing shell to zsh"
+    echo_info "Now changing shell to zsh! Goodbye!"
     env zsh
 }
 
