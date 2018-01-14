@@ -236,7 +236,7 @@ function cdc {
         return
     fi
 
-    local result=$(find ~/code -type d -maxdepth 4 | grep -m1 "$@")
+    local result=$(find ~/code -maxdepth 4 -type d | grep -m1 "$@")
 
     if [ -z $result ]; then
         echo "No match found for '$@'" >&2
