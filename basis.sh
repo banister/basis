@@ -121,6 +121,10 @@ download_file() {
 }
 
 prepare_command() {
+    if which "$1" > /dev/null 2>&1; then
+        return
+    fi
+
     case $(uname -s) in
         Darwin)
             if ! which brew > /dev/null 2>&1; then
