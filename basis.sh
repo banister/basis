@@ -274,8 +274,6 @@ main() {
     # must be last as oh-my-zsh installation enters the zsh
     wrap_with_messages zsh
 
-    switch_shell_to_zsh
-
     # done!
     completion_message
 

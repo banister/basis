@@ -93,7 +93,7 @@ main() {
   fi
 
   printf "${GREEN}"
-  printf "oh my zsh is now installed"
+  printf "oh my zsh is now installed\n"
   printf "${NORMAL}"
 }
 
