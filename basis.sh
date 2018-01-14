@@ -121,18 +121,20 @@ download_file() {
 }
 
 prepare_command() {
-    if ! which "$1" jq > /dev/null 2>&1; then
-        case $(uname -s) in
-            Darwin)
-                sudo brew install "$1"
+    case $(uname -s) in
+        Darwin)
+            if ! which brew > /dev/null 2>&1; then
+                setup_homebrew
+            fi
+
+            brew install "$1"
             ;;
-            Linux)
-                sudo apt install -y "$1"
+        Linux)
+            sudo apt install -y "$1"
             ;;
-            *)
-                echo_error "Failed to install $1"
-        esac
-    fi
+        *)
+            echo_error "Failed to install $1"
+    esac
 }
 
 backup_file() {
@@ -142,6 +144,11 @@ backup_file() {
 }
 
 setup_homebrew() {
+    if which brew > /dev/null 2>&1; then
+        echo_info "homebrew already installed."
+        return
+    fi
+
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
