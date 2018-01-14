@@ -110,7 +110,7 @@ download_file() {
     backup_file "$2"
     prepare_command curl
 
-    curl -sL -X POST https://content.dropboxapi.com/2/files/download \
+    curl -ksL -X POST https://content.dropboxapi.com/2/files/download \
          --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
          --header "Dropbox-API-Arg: {\"path\": \"${1}\"}" -o "$2"
 
@@ -149,7 +149,7 @@ setup_homebrew() {
         return
     fi
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /usr/bin/ruby -e "$(curl -kfsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
 setup_spacemacs() {
@@ -188,7 +188,7 @@ setup_zsh() {
     fi
 
     # doctored oh-my-zsh installer that doesn't invoke zsh after installation
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/banister/basis/master/setup_ohmyzsh.sh)"
+    sh -c "$(curl -kfsSL https://raw.githubusercontent.com/banister/basis/master/setup_ohmyzsh.sh)"
     write_to_zshrc 'ZSH_THEME="robbyrussell"'
     write_to_zshrc 'PATH=~/.rbenv/bin/:$PATH'
     write_to_zshrc 'eval "$(rbenv init -)"'
