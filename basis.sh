@@ -16,11 +16,12 @@ NORMAL="$(tput sgr0)"
 COMPLETED_INSTALLS=""
 
 echo_error() {
-    echo "${RED}${BOLD}ERROR: $@" >&2
+    echo "${RED}${BOLD}ERROR: ${NORMAL}$@" >&2
+    echo "${NORMAL}"
 }
 
 echo_info() {
-    echo "${BLUE}${BOLD}INFO: $@"
+    echo "${BLUE}${BOLD}INFO: ${NORMAL}$@"
 }
 
 if [ -z $DROPBOX_TOKEN ]; then
@@ -239,6 +240,7 @@ completion_message() {
     echo "${BOLD}###############################"
     echo "${BOLD}# Finished setting up system! #"
     echo "${BOLD}###############################"
+    echo "${NORMAL}"
 }
 
 switch_shell_to_zsh() {
@@ -264,7 +266,6 @@ main() {
 
     # now change to zsh
     echo_info "Now changing shell to zsh"
-    echo "${NORMAL}"
     env zsh
 }
 
