@@ -234,6 +234,7 @@ function cdc {
     fi
 }
 EOF
+
 }
 
 setup_direcs() {
