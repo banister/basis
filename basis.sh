@@ -80,7 +80,7 @@ setup_ruby() {
             mkdir -p ~/.rbenv/plugins
             git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build --depth 1
             sudo apt update
-            sudo apt install gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
+            sudo apt install -y gcc autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
             ;;
         *)
             echo_error "UNSUPPORTED OS VERSION $(uname -s)"
@@ -102,7 +102,7 @@ setup_osx_apps() {
 }
 
 setup_linux_apps() {
-    sudo apt install emacs24 cscope ack-grep jq zsh
+    sudo apt install -y emacs24 cscope ack-grep jq zsh
 }
 
 download_file() {
@@ -127,7 +127,7 @@ prepare_command() {
                 sudo brew install "$1"
             ;;
             Linux)
-                sudo apt install "$1"
+                sudo apt install -y "$1"
             ;;
             *)
                 echo_error "Failed to install $1"
