@@ -232,11 +232,12 @@ EOF
         cat << 'EOF' >> ~/.zshrc
 function cdc {
     if [ $# -le 0 ]; then
-        echo "No pattern provided."
+        cd ~/code
         return
     fi
 
-    local result=$(find ~/code -maxdepth 4 -type d | grep -m1 "$@")
+    local result=$(find ~/code -maxdepth 4 -type d -name "*$@*" | \
+      awk '{ print length, $0 }' | sort -n | head -1 | cut -f2- -d' ')
 
     if [ -z $result ]; then
         echo "No match found for '$@'" >&2
