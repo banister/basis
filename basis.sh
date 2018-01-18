@@ -102,7 +102,7 @@ setup_osx_apps() {
 }
 
 setup_linux_apps() {
-    sudo apt install -y emacs24 cscope ack-grep jq zsh
+    sudo apt install -y emacs25 cscope jq zsh
 }
 
 download_file() {
