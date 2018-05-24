@@ -96,13 +96,11 @@ setup_ruby() {
 
 setup_osx_apps() {
     brew install cask
-    brew tap d12frosted/emacs-plus
-    brew install emacs-plus ripgrep jq cscope zsh
-    brew linkapps emacs-plus
+    brew install ripgrep jq cscope zsh
 }
 
 setup_linux_apps() {
-    sudo apt install -y emacs25 cscope jq zsh
+    sudo apt install -y cscope jq zsh
 }
 
 download_file() {
