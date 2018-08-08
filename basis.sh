@@ -154,16 +154,6 @@ setup_homebrew() {
     /usr/bin/ruby -e "$(curl -kfsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 }
 
-setup_spacemacs() {
-    if [ -e ~/.emacs.d/spacemacs.mk ]; then
-        echo_info "spacemacs already installed"
-        return
-    fi
-
-    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d --depth 1
-    download_file /configfiles/emacs/dot-spacemacs ~/.spacemacs
-}
-
 setup_apps() {
     if which jq > /dev/null 2>&1; then
         echo_info "apps already installed"
@@ -277,7 +267,6 @@ main() {
     wrap_with_messages ssh
     wrap_with_messages ruby
     wrap_with_messages nano
-    wrap_with_messages spacemacs
     wrap_with_messages apps
     wrap_with_messages direcs
 
